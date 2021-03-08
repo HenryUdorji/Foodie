@@ -3,7 +3,7 @@ package com.henryudorji.foodie.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Random(
+data class CategoryMealResponse(
     @SerializedName("meals")
-    val meals: List<Meal>
+    val categoryMeals: List<CategoryMeal>
 )

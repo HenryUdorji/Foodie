@@ -4,16 +4,12 @@ package com.henryudorji.foodie.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Meal(
-    @SerializedName("dateModified")
-    val dateModified: Any,
     @SerializedName("idMeal")
     val idMeal: String,
     @SerializedName("strArea")
     val strArea: String,
     @SerializedName("strCategory")
     val strCategory: String,
-    @SerializedName("strCreativeCommonsConfirmed")
-    val strCreativeCommonsConfirmed: Any,
     @SerializedName("strDrinkAlternate")
     val strDrinkAlternate: Any,
     @SerializedName("strImageSource")
@@ -106,8 +102,6 @@ data class Meal(
     val strMeasure9: String,
     @SerializedName("strSource")
     val strSource: String,
-    @SerializedName("strTags")
-    val strTags: Any,
     @SerializedName("strYoutube")
     val strYoutube: String
 )

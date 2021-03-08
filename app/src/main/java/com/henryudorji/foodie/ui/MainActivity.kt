@@ -2,10 +2,12 @@ package com.henryudorji.foodie.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.henryudorji.foodie.R
+import com.henryudorji.foodie.data.repository.RecipeRepository
 import com.henryudorji.foodie.databinding.ActivityMainBinding
 import com.henryudorji.foodie.utils.Constants
 import com.henryudorji.foodie.utils.Constants.IS_SWITCH_ON
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var lottieSwitch: LottieAnimationView
     private var isSwitchOn = false
+    lateinit var recipeViewModel: RecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         isSwitchOn = SharedPref.getBooleanFromPref(IS_SWITCH_ON)
+
+        val recipeRepository = RecipeRepository()
+        val recipeViewModelFactory = RecipeViewModelFactory(application, recipeRepository)
+        recipeViewModel = ViewModelProvider(this, recipeViewModelFactory).get(RecipeViewModel::class.java)
 
         initViews()
     }
