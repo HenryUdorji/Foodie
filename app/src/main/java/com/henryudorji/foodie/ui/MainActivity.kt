@@ -14,7 +14,7 @@ import com.henryudorji.foodie.utils.Constants.IS_SWITCH_ON
 import com.henryudorji.foodie.utils.SharedPref
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private lateinit var lottieSwitch: LottieAnimationView
     private var isSwitchOn = false
     lateinit var recipeViewModel: RecipeViewModel

@@ -6,71 +6,71 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.henryudorji.foodie.R
-import com.henryudorji.foodie.adapter.HomeAdapter
-import com.henryudorji.foodie.databinding.FragmentHomeBinding
+import com.henryudorji.foodie.adapter.CategoryMealsAdapter
+import com.henryudorji.foodie.databinding.FragmentCategoryMealsBinding
 import com.henryudorji.foodie.ui.MainActivity
 import com.henryudorji.foodie.ui.RecipeViewModel
-import com.henryudorji.foodie.utils.Constants.CATEGORY
+import com.henryudorji.foodie.utils.Constants
 import com.henryudorji.foodie.utils.Resource
 
 //
 // Created by  on 3/4/2021.
 //
-class HomeFragment: Fragment(R.layout.fragment_home) {
-
-    private val TAG = "HomeFragment"
-    private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeAdapter: HomeAdapter
+class CategoryMealsFragment: Fragment(R.layout.fragment_category_meals) {
+    private val TAG = "CategoryDetailFragment"
+    private val args: CategoryMealsFragmentArgs by navArgs()
     private lateinit var recipeViewModel: RecipeViewModel
-
+    private lateinit var binding: FragmentCategoryMealsBinding
+    private lateinit var categoryMealsAdapter: CategoryMealsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
-        recipeViewModel = (activity as MainActivity).recipeViewModel
+
+        binding = FragmentCategoryMealsBinding.bind(view)
         val binding1 = (activity as MainActivity).binding
+        recipeViewModel = (activity as MainActivity).recipeViewModel
+
+        val categoryName = args.category.strCategory
         binding1.toolbarText.visibility = View.VISIBLE
-        binding1.lottieSwitch.visibility = View.VISIBLE
-        binding1.bottomNavigationView.visibility = View.VISIBLE
-        binding1.toolbarText.text = getString(R.string.app_name)
+        binding1.toolbarText.text = categoryName
+        binding1.lottieSwitch.visibility = View.GONE
+
 
         setupRecyclerView()
-        showCategories()
-        //showIngredients()
+        showCategoryMeal(categoryName)
     }
 
-    /*private fun showIngredients() {
-        recipeViewModel.ingredients.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    hideNoNetworkView()
-                    response.data?.let {
-                        homeAdapter.differ.
-                    }
-                }
-                is Resource.Error -> {
-
-                }
-                is Resource.Loading -> {
-
-                }
+    private fun setupRecyclerView() {
+        categoryMealsAdapter = CategoryMealsAdapter()
+        binding.recycler.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = categoryMealsAdapter
+        }
+        categoryMealsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putString(Constants.MEAL_ID, it.idMeal)
             }
-        })
-    }*/
+            findNavController().navigate(
+                R.id.action_categoryMealFragment_to_mealDetailFragment,
+                bundle
+            )
+        }
 
-    private fun showCategories() {
-        recipeViewModel.categories.observe(viewLifecycleOwner, Observer { response ->
+    }
+
+    private fun showCategoryMeal(categoryName: String) {
+        recipeViewModel.getAllCategoryMeals(categoryName)
+        recipeViewModel.categoryMeals.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     hideNoNetworkView()
                     response.data?.let {
-                        homeAdapter.differ.submitList(it.categories)
+                        categoryMealsAdapter.differ.submitList(it.categoryMeals)
                     }
                 }
                 is Resource.Error -> {
@@ -106,26 +106,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         binding.networkMessage.text = message
         binding.retryBtn.setOnClickListener {
             recipeViewModel.getAllCategories()
-        }
-    }
-
-
-    private fun setupRecyclerView() {
-        homeAdapter = HomeAdapter()
-        binding.categoryRecycler.apply {
-            layoutManager = LinearLayoutManager(requireContext(),
-                RecyclerView.HORIZONTAL,
-                false)
-            adapter = homeAdapter
-        }
-        homeAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable(CATEGORY, it)
-            }
-            findNavController().navigate(
-                R.id.action_homeFragment_to_categoryMealFragment,
-                bundle
-            )
         }
     }
 }

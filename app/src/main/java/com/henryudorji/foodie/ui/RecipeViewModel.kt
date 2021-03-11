@@ -9,8 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.henryudorji.foodie.FoodieApplication
-import com.henryudorji.foodie.data.model.CategoryResponse
-import com.henryudorji.foodie.data.model.IngredientMealResponse
+import com.henryudorji.foodie.data.model.*
 import com.henryudorji.foodie.data.repository.RecipeRepository
 import com.henryudorji.foodie.utils.Resource
 import kotlinx.coroutines.launch
@@ -25,61 +24,87 @@ class RecipeViewModel(
     private val recipeRepository: RecipeRepository
 ): AndroidViewModel(application) {
 
-    val mealsCategories: MutableLiveData<Resource<CategoryResponse>> = MutableLiveData()
-    val ingredients: MutableLiveData<Resource<IngredientMealResponse>> = MutableLiveData()
+    val categories: MutableLiveData<Resource<CategoryResponse>> = MutableLiveData()
+    val categoryMeals: MutableLiveData<Resource<CategoryMealResponse>> = MutableLiveData()
+    val mealDetails: MutableLiveData<Resource<MealResponse>> = MutableLiveData()
 
     init {
-        getAllMealCategories()
-        //getAllIngredientMeal()
+        getAllCategories()
     }
 
-    fun getAllMealCategories() = viewModelScope.launch {
-        mealsCategories.postValue(Resource.Loading())
+    fun getAllCategories() = viewModelScope.launch {
+        categories.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
                 val response = recipeRepository.getAllCategories()
-                mealsCategories.postValue(handleMealsCategories(response))
+                categories.postValue(handleCategories(response))
             }else {
-                mealsCategories.postValue(Resource.Error("Internet connection unavailable, check connection and retry"))
+                categories.postValue(Resource.Error("Internet connection unavailable, check connection and retry"))
             }
         }catch (t: Throwable) {
             when(t) {
-                is IOException -> mealsCategories.postValue(Resource.Error("Network failure"))
-                else -> mealsCategories.postValue(Resource.Error("Conversion Error"))
+                is IOException -> categories.postValue(Resource.Error("Network failure"))
+                else -> categories.postValue(Resource.Error("Conversion Error"))
             }
         }
     }
 
-    /*fun getAllIngredientMeal() = viewModelScope.launch {
-        ingredients.postValue(Resource.Loading())
+    fun getAllCategoryMeals(meal: String) = viewModelScope.launch {
+        categoryMeals.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = recipeRepository.getAllIngredients()
-                ingredients.postValue(handleIngredientResponse(response))
+                val response = recipeRepository.getAllCategoryMeals(meal)
+                categoryMeals.postValue(handleCategoryMeals(response))
             }else {
-                ingredients.postValue(Resource.Error("Internet connection unavailable, check connection and retry"))
+                categoryMeals.postValue(Resource.Error("Internet connection unavailable, check connection and retry"))
             }
         }catch (t: Throwable) {
             when(t) {
-                is IOException -> mealsCategories.postValue(Resource.Error("Network failure"))
-                else -> mealsCategories.postValue(Resource.Error("Conversion Error"))
+                is IOException -> categoryMeals.postValue(Resource.Error("Network failure"))
+                else -> categoryMeals.postValue(Resource.Error("Conversion Error"))
             }
         }
-    }*/
+    }
 
-    private fun handleIngredientResponse(response: Response<IngredientMealResponse>): Resource<IngredientMealResponse>? {
+    fun getMealDetails(mealId: String) = viewModelScope.launch {
+        mealDetails.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = recipeRepository.getMealDetails(mealId)
+                mealDetails.postValue(handleMealDetailResponse(response))
+            }else {
+                mealDetails.postValue(Resource.Error("Internet connection unavailable, check connection and retry"))
+            }
+        }catch (t: Throwable) {
+            when(t) {
+                is IOException -> mealDetails.postValue(Resource.Error("Network failure"))
+                else -> mealDetails.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+    private fun handleMealDetailResponse(response: Response<MealResponse>): Resource<MealResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                return Resource.Success(it);
+                return Resource.Success(it)
             }
         }
         return Resource.Error(response.message())
     }
 
-    private fun handleMealsCategories(response: Response<CategoryResponse>): Resource<CategoryResponse> {
+    private fun handleCategories(response: Response<CategoryResponse>): Resource<CategoryResponse> {
         if (response.isSuccessful) {
             response.body()?.let { categoriesResponse ->
                 return Resource.Success(categoriesResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleCategoryMeals(response: Response<CategoryMealResponse>): Resource<CategoryMealResponse>? {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
             }
         }
         return Resource.Error(response.message())

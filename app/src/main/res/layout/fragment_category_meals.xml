@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categoryRecycler"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -66,4 +66,5 @@
             android:fontFamily="@font/biryani_bold"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

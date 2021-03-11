@@ -96,4 +96,7 @@ dependencies {
 
     //rounded image
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //Card stack
+    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
 }

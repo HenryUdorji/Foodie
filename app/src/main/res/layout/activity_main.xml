@@ -23,10 +23,11 @@
             app:lottie_fileName="toggle_switch.json"/>
 
         <TextView
+            android:id="@+id/toolbarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/coffee_with_sugar"
             android:text="@string/app_name"
             android:textColor="@color/colorAccent"
@@ -57,7 +58,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lottie_switch"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarText"
             app:navGraph="@navigation/nav_graph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

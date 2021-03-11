@@ -9,5 +9,7 @@ class RecipeRepository {
 
     suspend fun getAllCategories() = ServiceGenerator.getApi.getCategories()
 
-    //suspend fun getAllIngredients() = ServiceGenerator.getApi.getIngredients()
+    suspend fun getAllCategoryMeals(meal: String) = ServiceGenerator.getApi.getCategoryMeals(meal)
+
+    suspend fun getMealDetails(mealId: String) = ServiceGenerator.getApi.getMealDetails(mealId)
 }

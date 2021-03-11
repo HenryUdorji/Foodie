@@ -34,6 +34,7 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
                 .into(recyclerImage)
 
             recyclerText.text = category.strCategory
+            recyclerDescText.text = category.strCategoryDescription
 
             root.setOnClickListener {
                 onItemClickListener?.let { it(category) }
