@@ -8,4 +8,5 @@ object Constants {
     const val IS_SWITCH_ON = "is_switch_on"
     const val CATEGORY = "category"
     const val MEAL_ID = "mealId"
+    const val YOUTUBE = "youtube"
 }

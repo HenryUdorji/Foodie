@@ -2,6 +2,7 @@ package com.henryudorji.foodie.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentNavHost) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController)
 
         //lottie switch
         lottieSwitch = binding.lottieSwitch

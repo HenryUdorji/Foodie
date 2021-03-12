@@ -31,13 +31,21 @@ class CategoryMealsFragment: Fragment(R.layout.fragment_category_meals) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentCategoryMealsBinding.bind(view)
-        val binding1 = (activity as MainActivity).binding
+        val activityMainBinding = (activity as MainActivity).binding
         recipeViewModel = (activity as MainActivity).recipeViewModel
 
         val categoryName = args.category.strCategory
-        binding1.toolbarText.visibility = View.VISIBLE
-        binding1.toolbarText.text = categoryName
-        binding1.lottieSwitch.visibility = View.GONE
+        val toolbar = activityMainBinding.toolbar
+        toolbar.visibility = View.VISIBLE
+        (activity as MainActivity).setSupportActionBar(toolbar)
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        activityMainBinding.lottieSwitch.visibility = View.GONE
+        activityMainBinding.toolbarText.apply {
+            visibility = View.VISIBLE
+            text = categoryName
+        }
 
 
         setupRecyclerView()

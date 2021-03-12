@@ -20,10 +20,8 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSplashBinding.bind(view)
-        val binding1 = (activity as MainActivity).binding
-        binding1.toolbarText.visibility = View.GONE
-        binding1.lottieSwitch.visibility = View.GONE
-        binding1.bottomNavigationView.visibility = View.GONE
+        val activityMainBinding = (activity as MainActivity).binding
+        activityMainBinding.toolbar.visibility = View.GONE
 
         //TODO"Remove status bar"
         handler = Handler()

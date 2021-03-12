@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
     <fragment
@@ -9,19 +10,11 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_categoryMealFragment"
-            app:destination="@id/categoryMealFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/favouriteFragment"
-        android:name="com.henryudorji.foodie.ui.fragments.FavouriteFragment"
-        android:label="FavouriteFragment" >
-        <action
-            android:id="@+id/action_favouriteFragment_to_mealDetailFragment"
-            app:destination="@id/mealDetailFragment"
-            app:enterAnim="@anim/anim_slide_in_right"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popEnterAnim="@anim/anim_slide_in_right"
-            app:popExitAnim="@anim/anim_slide_out_left"/>
+            app:destination="@id/categoryMealFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/mealDetailFragment"
@@ -30,18 +23,13 @@
         <argument
             android:name="mealId"
             app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.henryudorji.foodie.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
         <action
-            android:id="@+id/action_searchFragment_to_mealDetailFragment"
-            app:destination="@id/mealDetailFragment"
-            app:enterAnim="@anim/anim_slide_in_right"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popEnterAnim="@anim/anim_slide_in_right"
-            app:popExitAnim="@anim/anim_slide_out_left"/>
+            android:id="@+id/action_mealDetailFragment_to_youtubeFragment"
+            app:destination="@id/youtubeFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/categoryMealFragment"
@@ -49,13 +37,14 @@
         android:label="categoryMealFragment" >
         <action
             android:id="@+id/action_categoryMealFragment_to_mealDetailFragment"
-            app:destination="@id/mealDetailFragment" />
+            app:destination="@id/mealDetailFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
         <argument
             android:name="category"
             app:argType="com.henryudorji.foodie.data.model.Category"/>
-        <action
-            android:id="@+id/action_categoryMealFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -65,6 +54,25 @@
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/youtubeFragment"
+        android:name="com.henryudorji.foodie.ui.fragments.YoutubeFragment"
+        android:label="YoutubeFragment">
+        <argument
+            android:name="youtube"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_youtubeFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
     </fragment>
 </navigation>

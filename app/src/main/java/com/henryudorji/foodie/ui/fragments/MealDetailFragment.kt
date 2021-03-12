@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -13,6 +14,7 @@ import com.henryudorji.foodie.data.model.Meal
 import com.henryudorji.foodie.databinding.FragmentMealDetailBinding
 import com.henryudorji.foodie.ui.MainActivity
 import com.henryudorji.foodie.ui.RecipeViewModel
+import com.henryudorji.foodie.utils.Constants.YOUTUBE
 import com.henryudorji.foodie.utils.Resource
 
 //
@@ -27,13 +29,11 @@ class MealDetailFragment: Fragment(R.layout.fragment_meal_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMealDetailBinding.bind(view)
-
+        val activityMainBinding = (activity as MainActivity).binding
         recipeViewModel = (activity as MainActivity).recipeViewModel
         val mealId = args.mealId
-        val binding1 = (activity as MainActivity).binding
-        binding1.toolbarText.visibility = View.GONE
-        binding1.lottieSwitch.visibility = View.GONE
-        binding1.bottomNavigationView.visibility = View.GONE
+
+        activityMainBinding.toolbar.visibility = View.GONE
 
         showMealDetail(mealId)
     }
@@ -57,7 +57,13 @@ class MealDetailFragment: Fragment(R.layout.fragment_meal_detail) {
                         binding.youtubeBtn.apply {
                             isEnabled = true
                             setOnClickListener { view ->
-                                Snackbar.make(binding.root, it.meals[0].strYoutube, Snackbar.LENGTH_LONG).show()
+                                val bundle = Bundle().apply {
+                                    putString(YOUTUBE, it.meals[0].strYoutube)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_mealDetailFragment_to_youtubeFragment,
+                                    bundle
+                                )
                             }
                         }
                     }

@@ -34,28 +34,33 @@
             android:text="Pasta"
             android:layout_marginTop="@dimen/_5sdp"
             android:textColor="@color/ColorLightBlack"
-            android:textSize="@dimen/_25ssp"
+            android:textSize="@dimen/_20ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerImage" />
 
-        <TextView
-            android:id="@+id/recyclerDescText"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/recyclerImage"
-            android:fontFamily="@font/biryani_regular"
-            android:text="Pasta"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:textColor="@color/ColorLightBlack"
-            android:textSize="@dimen/_10ssp"
-            android:ellipsize="end"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerText" />
+            app:layout_constraintTop_toBottomOf="@+id/recyclerText"
+            app:layout_constraintVertical_bias="0.0">
 
+            <TextView
+                android:id="@+id/recyclerDescText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:fontFamily="@font/biryani_regular"
+                android:text="Pasta"
+                android:textColor="@color/ColorLightBlack"
+                android:textSize="@dimen/_11ssp" />
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

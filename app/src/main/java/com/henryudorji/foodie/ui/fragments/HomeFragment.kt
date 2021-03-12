@@ -32,36 +32,23 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         recipeViewModel = (activity as MainActivity).recipeViewModel
-        val binding1 = (activity as MainActivity).binding
-        binding1.toolbarText.visibility = View.VISIBLE
-        binding1.lottieSwitch.visibility = View.VISIBLE
-        binding1.bottomNavigationView.visibility = View.VISIBLE
-        binding1.toolbarText.text = getString(R.string.app_name)
+        val activityMainBinding = (activity as MainActivity).binding
+
+        val toolbar = activityMainBinding.toolbar
+        toolbar.visibility = View.VISIBLE
+        (activity as MainActivity).setSupportActionBar(toolbar)
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
+
+        activityMainBinding.lottieSwitch.visibility = View.VISIBLE
+        activityMainBinding.toolbarText.apply {
+            visibility = View.VISIBLE
+            text = getString(R.string.app_name)
+        }
 
         setupRecyclerView()
         showCategories()
-        //showIngredients()
     }
-
-    /*private fun showIngredients() {
-        recipeViewModel.ingredients.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    hideNoNetworkView()
-                    response.data?.let {
-                        homeAdapter.differ.
-                    }
-                }
-                is Resource.Error -> {
-
-                }
-                is Resource.Loading -> {
-
-                }
-            }
-        })
-    }*/
 
     private fun showCategories() {
         recipeViewModel.categories.observe(viewLifecycleOwner, Observer { response ->
