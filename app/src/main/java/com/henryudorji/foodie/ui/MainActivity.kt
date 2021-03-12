@@ -1,8 +1,8 @@
 package com.henryudorji.foodie.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -10,7 +10,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.henryudorji.foodie.R
 import com.henryudorji.foodie.data.repository.RecipeRepository
 import com.henryudorji.foodie.databinding.ActivityMainBinding
-import com.henryudorji.foodie.utils.Constants
 import com.henryudorji.foodie.utils.Constants.IS_SWITCH_ON
 import com.henryudorji.foodie.utils.SharedPref
 
@@ -45,9 +44,11 @@ class MainActivity : AppCompatActivity() {
         if (isSwitchOn) {
             lottieSwitch.setMinAndMaxProgress(0.5f, 1.0f)
             lottieSwitch.playAnimation()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }else {
             lottieSwitch.setMinAndMaxProgress(0.0f, 0.5f)
             lottieSwitch.playAnimation()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
         lottieSwitch.setOnClickListener {
@@ -55,11 +56,13 @@ class MainActivity : AppCompatActivity() {
                 lottieSwitch.setMinAndMaxProgress(0.5f, 1.0f)
                 lottieSwitch.playAnimation()
                 SharedPref.putBooleanInPref(IS_SWITCH_ON, false)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 recreate()
             }else {
                 lottieSwitch.setMinAndMaxProgress(0.0f, 0.5f)
                 lottieSwitch.playAnimation()
                 SharedPref.putBooleanInPref(IS_SWITCH_ON, true)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 recreate()
             }
         }
